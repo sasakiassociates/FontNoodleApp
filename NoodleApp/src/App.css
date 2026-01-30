@@ -1,0 +1,50 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.Container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: stretch;
+}
+
+.controls {
+    display:flex;
+    flex-direction:column;
+    gap: 8px;
+    outline: pink;
+    padding: 8px;
+    align-items:stretch;
+}
+
+.Row {
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    gap: 8px
+}
+
+.PanelColumn {
+    display:flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.Logo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.Swatch {
+    width:18px;
+    height:18px;
+    border: 1px solid grey;
+    border-radius: 8px;
+}
