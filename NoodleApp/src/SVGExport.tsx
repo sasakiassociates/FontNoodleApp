@@ -1,6 +1,6 @@
 import { useCallback, useRef } from "react";
-import { IconButton, Button } from "@strategies/ui";
-import { PiFileSvgBold, PiFilePngBold } from "react-icons/pi";
+import type { FileEvents } from "./DataStorage";
+import { useEventSubscription, type EventEmitter } from "@strategies/react-events"
 class SvgExtraction {
     private can: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D | null;
@@ -50,16 +50,24 @@ function downloadObjectUrl(objectUrl: string, filename: string, mimeType?: strin
 }
 type SvgDownloadableProps = {
     fileName: string,
+    emitter: EventEmitter<FileEvents>,
     pngScale: number,
     children?: React.ReactNode;
 };
-export const SvgDownloadable = ({ fileName, pngScale, children }: SvgDownloadableProps) => {
+export const SvgDownloadable = ({ fileName, pngScale, children, emitter }: SvgDownloadableProps) => {
     const svgRef = useRef<HTMLDivElement>(null);
+    useEventSubscription(emitter, "savePreview", (fileType)=>{
+        if (fileType === "svg") {
+            downloadSVG()
+        } else {
+            downloadPNG()
+        }
+    })
     const downloadSVG = useCallback(() => {
         const svg = svgRef.current!.innerHTML;
         const blob = new Blob([svg], { type: "image/svg+xml" });
         downloadBlob(blob, fileName + '.svg');
-    }, []);
+    }, [fileName]);
     const downloadPNG = useCallback(() => {
         const svgParent = svgRef.current;
         if (!svgParent) return;
@@ -70,14 +78,10 @@ export const SvgDownloadable = ({ fileName, pngScale, children }: SvgDownloadabl
             const pngData = await new SvgExtraction().convertToPng(svg, svgSize, imgSize, 0, 0);
             downloadObjectUrl(pngData, fileName + '.png', 'image/png');
         })();
-    }, []);
+    }, [fileName]);
     return <div className={'SvgDownloadable'}>
         <div ref={svgRef}>
             {children}
-        </div>
-        <div className={'button-container'}>
-            <IconButton icon={<PiFileSvgBold />} onClick={downloadSVG} />
-            <IconButton icon={<PiFilePngBold />} onClick={downloadPNG} />
         </div>
     </div>
 };

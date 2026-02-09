@@ -1,31 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap');
+
 #root {
-  max-width: 1280px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 16px;
   text-align: center;
+  background-color: #F2F5FA;
+}
+
+body {
+    margin: 0px;
+    height: 100%;
 }
 
 .Container {
     display: flex;
     flex-direction: row;
     gap: 16px;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: stretch;
+    min-height: 87vh;
 }
 
 .controls {
     display:flex;
     flex-direction:column;
     gap: 8px;
-    outline: pink;
     padding: 8px;
-    align-items:stretch;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    /* max-height: 750px; */
 }
 
 .Row {
     display:flex;
     flex-direction:row;
     align-items: center;
+    justify-content: space-between;
     gap: 8px
 }
 
@@ -33,13 +45,22 @@
     display:flex;
     flex-direction: column;
     gap: 8px;
+    flex-wrap: wrap;
+    max-height: 87vh;
+    
+    align-items: stretch;
 }
 
-.Logo {
+.TopBar {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     margin-bottom: 20px;
+}
+
+.Logo {
+    background: #050038;
+    height: fit-content;
 }
 
 .Swatch {
@@ -47,4 +68,68 @@
     height:18px;
     border: 1px solid grey;
     border-radius: 8px;
+}
+
+.Preview {
+    flex-grow: 3;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Panel {
+    min-width: 300px;
+    
+    flex-grow: 1;
+}
+
+.HeaderText {
+    margin-right: auto;
+}
+
+.SideBar {
+    display: flex;
+    flex-direction: column;
+    /* max-height: 900px; */
+    gap: 8px;
+}
+
+.BottomButtonInSideBar {
+    margin-bottom: auto;
+}
+
+[role = "button"] {
+    cursor: pointer;
+}
+
+p {
+    margin: 0;
+}
+
+.TextDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.Panel.minimized {
+    flex-grow: 0;
+}
+
+.figtree-fonting {
+  font-family: "Figtree", sans-serif !important;
+  font-size: small;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.header {
+    max-width: 100%;
+}
+
+section .figtree-fonting {
+  font-family: "Figtree", sans-serif;
 }

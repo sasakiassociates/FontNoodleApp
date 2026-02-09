@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@strategies/react-events": "^1.0.1",
     "@strategies/ui": "^2.21.10",
     "chroma-js": "^3.2.0",
     "mobx": "^6.15.0",
