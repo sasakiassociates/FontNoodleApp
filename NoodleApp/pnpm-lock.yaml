@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@strategies/react-events':
+        specifier: ^1.0.1
+        version: 1.0.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       '@strategies/ui':
         specifier: ^2.21.10
         version: 2.21.10(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
@@ -1181,6 +1184,13 @@ packages:
     resolution: {integrity: sha512-Zv7v6q6aV+VslnpwzqKAmrk5JdVkLUzok2208ZXGipjb+msxBr/fJPZyeEXiFgH7k62Ak0SLIfxQRZQvTuf7rQ==}
     cpu: [x64]
     os: [win32]
+
+  '@strategies/react-events@1.0.1':
+    resolution: {integrity: sha512-WpXZy1K49dmgigC3zDgl1GNbBu9UwM8/2pwpcRV+FUwJYfsXbCZDAFFYtjFc9EkVunZ6gUylVfW11/gBtxRSag==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^5.0.0
 
   '@strategies/tokens@4.3.46':
     resolution: {integrity: sha512-3O6i5iLHtpdmzGgZ+HQ3pYcAgpPW1nfLXoxmBm0lKwb2NSitLP4hPIFjC+He7mjwI2nar6XDE9CLgJFtpnQ4ZQ==}
@@ -3546,6 +3556,12 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.57.0':
     optional: true
+
+  '@strategies/react-events@1.0.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)':
+    dependencies:
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+      typescript: 5.9.3
 
   '@strategies/tokens@4.3.46(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)':
     dependencies:

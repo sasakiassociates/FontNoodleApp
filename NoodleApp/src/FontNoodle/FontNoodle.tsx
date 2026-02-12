@@ -1,6 +1,7 @@
 import {Letterify2} from "./Letter.tsx";
 import chroma from "chroma-js";
 import { betterLetters } from "./Storage.tsx";
+import { mainFile } from "../DataStorage.ts";
 
 export type WordifyProps = {
     word:string,
@@ -9,7 +10,9 @@ export type WordifyProps = {
     colorPalette:string[],
     seed:number,
     padding?:number,
-    gap?:number
+    gap?:number,
+    seedArray: number[][],
+    index?: number
 }
 
 export type FontNoodleProps = Omit<WordifyProps, "word"> & {
@@ -30,7 +33,7 @@ export function FontNoodleSVG(props:FontNoodleProps) {
                 <rect fill={bgColor} width={maxWidth+padding*2-gap*height} height={(height+lineSpacing)*words.length+padding*2-lineSpacing} rx={8} ry={8}/>
                 {words.map((v, i) => 
                     <g key={`${v}, ${i}`} transform={`translate(${(maxWidth-Array.from(v).reduce((total, v)=>total + getWidth(v.toUpperCase(), height) + gap*height, 0))/2}, ${i*(height+lineSpacing)})`}>
-                        <Wordify {...props} word={v} seed={seed+i*100} colorPalette={newColors}/>
+                        <Wordify {...props} word={v} seed={seed+i*100} colorPalette={newColors} index={i}/>
                     </g>
                 )}
             </svg>
@@ -38,15 +41,15 @@ export function FontNoodleSVG(props:FontNoodleProps) {
 }
 
 export function Wordify(props:WordifyProps) {
-    const {height=100, colorPalette, word, seed, letterContrast, padding=0, gap=0.1} = props
+    const {height=100, colorPalette, word, seed, letterContrast, padding=0, gap=0.1, index=0} = props
     if (!word) return null
     let dist = 0
        return(Array.from(word).map((v,i)=> { 
             const pos = dist
             dist += getWidth(v.toUpperCase(), height) + gap*height
             return(
-                <g key={`${v},${i}`} transform={`translate(${pos+padding}, ${padding}), scale(${height/getHeight(v.toUpperCase())})`}>
-                    <Letterify2 name={v.toUpperCase()} seed={seed+i*100} palette={colorPalette} contrast={letterContrast}/>
+                <g key={`${v},${i}`} transform={`translate(${pos+padding}, ${padding}), scale(${height/getHeight(v.toUpperCase())})`} role="button" onClick={(e)=>mainFile.settings[mainFile.activeIndex].setSeedArray(index, i, e.shiftKey ? -73 : 73)}>
+                    <Letterify2 name={v.toUpperCase()} seed={seed+i*100+props.seedArray[index][i]} palette={colorPalette} contrast={letterContrast}/>
                 </g>
             )
         }))
