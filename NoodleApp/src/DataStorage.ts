@@ -1,4 +1,4 @@
-import { computed, override } from 'mobx'
+import { action, computed, observable, override } from 'mobx'
 import {ExtendedModel, Model, model, modelAction, prop, undoMiddleware, getSnapshot, applySnapshot, detach, getParent} from 'mobx-keystone'
 import { sasakiColors } from './FontNoodle/Storage'
 import {EventEmitter} from '@strategies/react-events'
@@ -18,12 +18,6 @@ export class MainFile extends Model ({
     if (this.activeIndex > this.settings.length) throw "Invalid Index" 
     return this.settings[this.activeIndex]
   }
-  @computed
-  get isSaved() {
-    const data = localStorage.getItem(`FontNoodle - ${this.activeIndex}`)
-    if (!data) return false
-    if (JSON.stringify(getSnapshot(this.settings[this.activeIndex])) === data) return true
-  }
   @modelAction
   addSettings(settings:Settings){
     this.settings.push(settings)
@@ -38,9 +32,6 @@ export class MainFile extends Model ({
   addNewBlankSettings() {
     this.setTabsMade(this.tabsMade + 1)
     this.addSettings(new Settings({words: [""], tabName:`Noodle ${this.tabsMade}`}))
-  }
-  save(key:string) {
-    localStorage.setItem(`${key} - ${this.activeIndex}`, JSON.stringify(getSnapshot(this.settings[this.activeIndex])))
   }
   @modelAction
   load(key:string){
@@ -126,6 +117,22 @@ export class Settings extends Model ({
       file.setActiveIndex(0)
       detach(this)
     }
+    @observable
+    savedState = ""
+    @action
+    save(key:string) {
+      const file = getParent(getParent(this)!) as MainFile
+      const data = JSON.stringify(getSnapshot(this))
+      localStorage.setItem(`${key} - ${file.activeIndex}`, data)
+      this.savedState = data
+    }
+    @computed
+    get isSaved(){
+      const data = JSON.stringify(getSnapshot(this))
+      if (!data) return false
+      if (data === this.savedState) return true
+    }
+
 }
 const defaultSettings = new Settings({})
 export const mainFile = new MainFile({settings:[defaultSettings]})
