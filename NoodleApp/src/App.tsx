@@ -3,9 +3,9 @@ import "./App.css"
 import { Paletteable } from './FontNoodle/Palette.tsx'
 import { mainFile, undoManager } from "./DataStorage.ts"
 import { observer } from "mobx-react-lite"
-import { Button, BaseIcon, NotificationIndicator, IconButton } from "@sasakiassociates/powder-ds-components"
-import { AccordionStandard, Body, ColorField, InputoutputPill, NumberField, Panel, Slider, TextField, Title } from '@strategies/ui'
-import { PiArrowUUpLeftBold, PiArrowUUpRightBold, PiFilePngBold, PiFileSvgBold, PiFloppyDiskBold, PiFolderOpenBold, PiGearBold, PiInfoBold, PiLightbulbBold, PiPaletteBold, PiPlusBold, PiShapesBold, PiSlidersHorizontalBold, PiTextAaBold, PiTrashBold, PiUserBold } from "react-icons/pi"
+import { Button, BaseIcon, NotificationIndicator, IconButton, Slider } from "@sasakiassociates/powder-ds-components"
+import { AccordionStandard, Body, ColorField, InputoutputPill, NumberField, Panel, TextField, Title } from '@strategies/ui'
+import { PiGearBold, PiLightbulbBold, PiPaletteBold, PiPlusBold, PiSlidersHorizontalBold, PiTextAaBold } from "react-icons/pi"
 import { colorPalettes } from './FontNoodle/Storage.tsx'
 import { SwatchPicker } from './SwatchPicker.tsx'
 import chroma from "chroma-js"
@@ -39,17 +39,6 @@ function NoodleTheFonts() {
       </div>
     </div>
     <div className="Container">
-      {/* <section className="SideBar">
-        <IconButton icon={<PiInfoBold />} tooltip="Info" tooltipPosition="right" />
-        <IconButton icon={<PiGearBold />} tooltip="Settings" tooltipPosition="right" />
-        <IconButton icon={<PiFloppyDiskBold />} onClick={() => settings.save("FontNoodle")} tooltip="Save" tooltipPosition='right' indicatorIconCount={settings.isSaved ? 0 : 1} />
-        <IconButton icon={<PiFolderOpenBold />} onClick={() => mainFile.load("FontNoodle")} tooltip="Load" tooltipPosition="right"></IconButton>
-        <IconButton icon={<PiArrowUUpLeftBold />} onClick={() => undoManager.undo()} />
-        <div className="BottomButtonInSideBar">
-          <IconButton icon={<PiArrowUUpRightBold />} onClick={() => undoManager.redo()} />
-        </div>
-        <IconButton icon={<PiUserBold />} />
-      </section> */}
       <section className="SideBar">
         <IconButton name="Info" aria-label="Info" />
         <IconButton name="Gear" aria-label="Settings" />
@@ -96,8 +85,7 @@ function NoodleTheFonts() {
           <Body>
             <section className="controls">
               <TextField title="Preset Name" onChange={v => settings.setTabName(v)} value={settings.tabName}></TextField>
-              <Button leftIcon={<PiTrashBold />} semantics="alert" isDisabled={mainFile.settings.length === 1} onPress={() => { mainFile.settings[mainFile.activeIndex].remove(); mainFile.settings.map((_, i) => { mainFile.setActiveIndex(i); mainFile.settings[mainFile.activeIndex].save("FontNoodle") }); mainFile.setActiveIndex(0) }}>Delete Noodle</Button>
-
+              <Button leftIcon={<BaseIcon name="Trash" weight="bold" variant="inverse" />} semantics="alert" isDisabled={mainFile.settings.length === 1} onPress={() => { mainFile.settings[mainFile.activeIndex].remove(); mainFile.settings.map((_, i) => { mainFile.setActiveIndex(i); mainFile.settings[mainFile.activeIndex].save("FontNoodle") }); mainFile.setActiveIndex(0) }}>Delete Noodle</Button>
             </section>
           </Body>
         </Panel>
