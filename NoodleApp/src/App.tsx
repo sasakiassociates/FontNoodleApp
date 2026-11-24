@@ -3,8 +3,8 @@ import "./App.css"
 import { Paletteable } from './FontNoodle/Palette.tsx'
 import { mainFile, undoManager } from "./DataStorage.ts"
 import { observer } from "mobx-react-lite"
-import { Button, BaseIcon, NotificationIndicator } from "@sasakiassociates/powder-ds-components"
-import { AccordionStandard, Body, ColorField, IconButton, InputoutputPill, NumberField, Panel, Slider, TextField, Title } from '@strategies/ui'
+import { Button, BaseIcon, NotificationIndicator, IconButton } from "@sasakiassociates/powder-ds-components"
+import { AccordionStandard, Body, ColorField, InputoutputPill, NumberField, Panel, Slider, TextField, Title } from '@strategies/ui'
 import { PiArrowUUpLeftBold, PiArrowUUpRightBold, PiFilePngBold, PiFileSvgBold, PiFloppyDiskBold, PiFolderOpenBold, PiGearBold, PiInfoBold, PiLightbulbBold, PiPaletteBold, PiPlusBold, PiShapesBold, PiSlidersHorizontalBold, PiTextAaBold, PiTrashBold, PiUserBold } from "react-icons/pi"
 import { colorPalettes } from './FontNoodle/Storage.tsx'
 import { SwatchPicker } from './SwatchPicker.tsx'
@@ -39,7 +39,7 @@ function NoodleTheFonts() {
       </div>
     </div>
     <div className="Container">
-      <section className="SideBar">
+      {/* <section className="SideBar">
         <IconButton icon={<PiInfoBold />} tooltip="Info" tooltipPosition="right" />
         <IconButton icon={<PiGearBold />} tooltip="Settings" tooltipPosition="right" />
         <IconButton icon={<PiFloppyDiskBold />} onClick={() => settings.save("FontNoodle")} tooltip="Save" tooltipPosition='right' indicatorIconCount={settings.isSaved ? 0 : 1} />
@@ -49,13 +49,29 @@ function NoodleTheFonts() {
           <IconButton icon={<PiArrowUUpRightBold />} onClick={() => undoManager.redo()} />
         </div>
         <IconButton icon={<PiUserBold />} />
+      </section> */}
+      <section className="SideBar">
+        <IconButton name="Info" aria-label="Info" />
+        <IconButton name="Gear" aria-label="Settings" />
+        <div className="indicator-anchor">
+          <IconButton name="FloppyDisk" aria-label="Save" onClick={() => settings.save("FontNoodle")} />
+          {!settings.isSaved && (
+            <NotificationIndicator count={1} variant="alert" size="default" position="top-right" expandOnHover={true} />
+          )}
+        </div>
+        <IconButton name="FolderOpen" aria-label="Load" onClick={() => mainFile.load("FontNoodle")} />
+        <IconButton name="ArrowUUpLeft" aria-label="Undo" onClick={() => undoManager.undo()} />
+        <div className="BottomButtonInSideBar">
+          <IconButton name="ArrowUUpRight" aria-label="Redo" onClick={() => undoManager.redo()} />
+        </div>
+        <IconButton name="User" aria-label="Account" />
       </section>
       <Panel className="Preview" icon={<PiTextAaBold />}>
         <Title>
           <div className="Row">
             <p className="HeaderText">Preview</p>
-            <IconButton icon={<PiFileSvgBold />} onClick={() => settings.savePreview("svg")} tooltip="Download SVG"></IconButton>
-            <IconButton icon={<PiFilePngBold />} onClick={() => settings.savePreview("png")} tooltip="Download PNG"></IconButton>
+            <IconButton name="FileSvg" aria-label="Download SVG" onClick={() => settings.savePreview("svg")} />
+            <IconButton name="FilePng" aria-label="Download PNG" onClick={() => settings.savePreview("png")} />
           </div>
         </Title>
         <Body>
