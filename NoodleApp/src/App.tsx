@@ -3,8 +3,8 @@ import "./App.css"
 import { Paletteable } from './FontNoodle/Palette.tsx'
 import { mainFile, undoManager } from "./DataStorage.ts"
 import { observer } from "mobx-react-lite"
-import { Button } from "@sasakiassociates/powder-ds-components"
-import { AccordionStandard, BaseIcon, Body, ColorField, IconButton, InputoutputPill, NumberField, Panel, Slider, TextField, Title } from '@strategies/ui'
+import { Button, BaseIcon, NotificationIndicator } from "@sasakiassociates/powder-ds-components"
+import { AccordionStandard, Body, ColorField, IconButton, InputoutputPill, NumberField, Panel, Slider, TextField, Title } from '@strategies/ui'
 import { PiArrowUUpLeftBold, PiArrowUUpRightBold, PiFilePngBold, PiFileSvgBold, PiFloppyDiskBold, PiFolderOpenBold, PiGearBold, PiInfoBold, PiLightbulbBold, PiPaletteBold, PiPlusBold, PiShapesBold, PiSlidersHorizontalBold, PiTextAaBold, PiTrashBold, PiUserBold } from "react-icons/pi"
 import { colorPalettes } from './FontNoodle/Storage.tsx'
 import { SwatchPicker } from './SwatchPicker.tsx'
@@ -20,7 +20,19 @@ function NoodleTheFonts() {
     <div className="TopBar">
       <div className="Row">
         <FontNoodleSVG words={["FontNoodle"]} seed={now.getHours()} colorPalette={colorPalettes[0][1]} height={35} bgColor={"#050038"} padding={8} seedArray={[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]} />
-        <BaseIcon icon={<PiShapesBold />} indicatorIconCount={mainFile.settings.length}></BaseIcon>
+
+        <div
+          className="indicator-anchor"
+        >
+          <BaseIcon name="Shapes" weight="bold" size="lg" variant="default" />
+          <NotificationIndicator count={mainFile.settings.length}
+            variant="alert"
+            size="default"
+            expandOnHover={true}
+            iconName="Bell"
+            position="top-right" />
+        </div>
+
         {mainFile.settings.map((v, i) => <>
           <Button variant={mainFile.activeIndex === i ? "primary" : "secondary"} onPress={() => mainFile.setActiveIndex(i)}>{v.tabName}</Button></>)}
         <Button leftIcon={<PiPlusBold />} onPress={() => mainFile.addNewBlankSettings()} semantics="discovery">New Noodle</Button>
