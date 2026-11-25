@@ -3,8 +3,8 @@ import { Swatch } from "./Swatch";
 import { RgbaColorPicker, type RgbaColor, type RgbColor, HexColorPicker } from "react-colorful";//NOTE: I would like to use ColorPicker from "@strategies/ui" but it's throwing a bunch of errors
 import { hexToRgb, useOnClickOutside } from "./helpers";
 import ReactDOM from "react-dom";
-import { PiEyedropperFill } from "react-icons/pi";
-import { Button, IconButton } from "@strategies/ui";
+import { Button } from "@strategies/ui";
+import { IconButton } from "@sasakiassociates/powder-ds-components"
 
 const format = (number: number) => {
     const hex = number.toString(16);
@@ -30,18 +30,18 @@ type SwatchPickerProps = {
 };
 
 export const SwatchPicker = ({
-                                 color,
-                                 setColor,
-                                 alpha,
-                                 setAlpha,
-                                 resetButtonText,
-                                 resetButtonAction,
-                                 optionalIncludes = {
-                                     eyedropper: true,
-                                     hexInput: true,
-                                     html5ColorInput: false
-                                 }
-                             }: SwatchPickerProps) => {
+    color,
+    setColor,
+    alpha,
+    setAlpha,
+    resetButtonText,
+    resetButtonAction,
+    optionalIncludes = {
+        eyedropper: true,
+        hexInput: true,
+        html5ColorInput: false
+    }
+}: SwatchPickerProps) => {
     const [open, setOpen] = useState<boolean>(false);
     const [position, setPosition] = useState<{ top: number, left: number }>({ top: 0, left: 0 });
     const wrapperRef = useRef(null);
@@ -102,7 +102,7 @@ export const SwatchPicker = ({
 
     return (
         <div className="SwatchPicker">
-            <Swatch color={color} onClick={handleSwatchClick}/>
+            <Swatch color={color} onClick={handleSwatchClick} />
             {open && ReactDOM.createPortal(
                 <div className="picker-open" ref={wrapperRef} style={{
                     position: 'absolute',
@@ -117,9 +117,9 @@ export const SwatchPicker = ({
                         <div><Button onClick={() => resetButtonAction()}>{resetButtonText}</Button></div>}
                     {!setAlpha ? <>
                         <HexColorPicker color={color}
-                                        onChange={(value: string) => {
-                                            setColor(value);
-                                        }}/>
+                            onChange={(value: string) => {
+                                setColor(value);
+                            }} />
                     </> : <>
                         <RgbaColorPicker
                             color={pickerColor}
@@ -140,7 +140,7 @@ export const SwatchPicker = ({
                             />
                             }
                             {optionalIncludes?.eyedropper &&
-                                <IconButton icon={<PiEyedropperFill/>} labelText={'Eyedropper'} onClick={() => handleScreenColorPick()}/>
+                                <IconButton name="Eyedropper" onClick={() => handleScreenColorPick()} aria-label="Eyedropper" />
                             }
                             {optionalIncludes?.html5ColorInput && <input
                                 type="color"
